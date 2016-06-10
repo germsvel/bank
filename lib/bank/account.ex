@@ -1,11 +1,16 @@
 defmodule Bank.Account do
-  defstruct name: nil, balance: 0
+  defstruct balance: 0
 
   def new do
+    {:ok, pid} = Bank.Account.Supervisor.start_child
+    pid
+  end
+
+  def start_link do
     Agent.start_link(fn -> %Bank.Account{} end)
   end
 
-  def get_balance(pid) do
+  def balance(pid) do
     Agent.get(pid, fn account -> account.balance end)
   end
 
@@ -13,6 +18,7 @@ defmodule Bank.Account do
     Agent.update(pid, fn account ->
       %{account | balance: account.balance + amount}
     end)
+    pid
   end
 
   def withdraw(pid, amount) do

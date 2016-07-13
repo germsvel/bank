@@ -9,11 +9,13 @@ defmodule Bank do
     children = [
       # Define workers and child supervisors to be supervised
       supervisor(Bank.Account.Supervisor, []),
+      supervisor(Bank.Transfer.Supervisor, []),
+      supervisor(Bank.Loan.Supervisor, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Bank.Supervisor]
+    opts = [strategy: :rest_for_one, name: Bank.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

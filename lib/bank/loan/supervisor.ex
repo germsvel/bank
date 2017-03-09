@@ -4,12 +4,13 @@ defmodule Bank.Loan.Supervisor do
   @name :bank_loan_supervisor
 
   def start_link do
+    IO.puts ">>> Starting bank loan supervisor"
     Supervisor.start_link(__MODULE__, [], name: @name)
   end
 
   def init(_) do
     children = [
-      worker(Bank.LoanProcessor, []),
+      worker(Bank.Loan.Processor, []),
       worker(Bank.Loan, [])
     ]
 

@@ -12,6 +12,7 @@ defmodule Bank.Transfer.Supervisor do
       worker(Bank.Transfer, [])
     ]
 
+    IO.puts ">>> Starting bank transfer supervisor"
     supervise(children, strategy: :one_for_one)
   end
 end

@@ -4,6 +4,7 @@ defmodule Bank.Transfer do
   @name :bank_transfer
 
   def start_link do
+    IO.puts ">>> Starting bank transfer"
     GenServer.start_link(__MODULE__, [], name: @name)
   end
 

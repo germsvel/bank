@@ -4,6 +4,7 @@ defmodule Bank.Account.Supervisor do
   @name :bank_account_supervisor
 
   def start_link do
+    IO.puts ">>> Starting bank account supervisor"
     Supervisor.start_link(__MODULE__, [], name: @name)
   end
 
@@ -13,7 +14,7 @@ defmodule Bank.Account.Supervisor do
 
   def init(_) do
     children = [
-      worker(Bank.Account, [])
+      worker(Bank.Account, [], restart: :temporary)
     ]
 
     supervise(children, strategy: :simple_one_for_one)

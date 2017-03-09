@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/scrap/bank/lib/bank/loan/supervisor.ex.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.4_v1">
+<meta name="syntax" content="none">
+<meta name="settings" content="use_css,no_foldcolumn,expand_tabs,prevent_copy=">
+<meta name="colorscheme" content="solarized">
+<style type="text/css">
+<!--
+pre { font-family: monospace; color: #839496; background-color: #002b36; }
+body { font-family: monospace; color: #839496; background-color: #002b36; }
+* { font-size: 1em; }
+.Constant { color: #2aa198; }
+.Statement { color: #719e07; }
+.PreProc { color: #cb4b16; }
+.Type { color: #b58900; }
+.Special { color: #dc322f; }
+.Identifier { color: #268bd2; }
+.Comment { color: #586e75; font-style: italic; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="PreProc">defmodule</span> <span class="Type">Bank.Loan.Supervisor</span> <span class="Statement">do</span>
+  <span class="PreProc">use</span> <span class="Type">Supervisor</span>
+
+  <span class="Identifier">@name</span> <span class="Constant">:bank_loan_supervisor</span>
+
+  <span class="PreProc">def</span> <span class="Identifier">start_link</span> <span class="Statement">do</span>
+    <span class="Type">IO</span><span class="Statement">.</span>puts <span class="Special">&quot;</span><span class="Constant">&gt;&gt;&gt; Starting bank loan supervisor</span><span class="Special">&quot;</span>
+    <span class="Type">Supervisor</span><span class="Statement">.</span>start_link(<span class="Constant">__MODULE__</span>, [], <span class="Constant">name:</span> <span class="Identifier">@name</span>)
+  <span class="Statement">end</span>
+
+  <span class="PreProc">def</span> <span class="Identifier">init</span>(<span class="Comment">_</span>) <span class="Statement">do</span>
+    children <span class="Statement">=</span> [
+      worker(<span class="Type">Bank.Loan.Processor</span>, []),
+      worker(<span class="Type">Bank.Loan</span>, [])
+    ]
+
+    supervise(children, <span class="Constant">strategy:</span> <span class="Constant">:one_for_all</span>)
+  <span class="Statement">end</span>
+<span class="Statement">end</span>
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

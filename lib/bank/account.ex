@@ -7,6 +7,7 @@ defmodule Bank.Account do
   end
 
   def start_link do
+    IO.puts ">>> Starting bank account"
     Agent.start_link(fn -> %Bank.Account{} end)
   end
 
